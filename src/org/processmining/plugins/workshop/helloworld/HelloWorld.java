@@ -6,7 +6,7 @@ import org.processmining.framework.plugin.annotations.Plugin;
 
 public class HelloWorld {
         @Plugin(
-                name = "My Hello World Plugin", 
+                name = "My Hello World Plugin Erza Ganteng Banget", 
                 parameterLabels = {}, 
                 returnLabels = { "Hello world string" }, 
                 returnTypes = { String.class }, 
@@ -19,6 +19,6 @@ public class HelloWorld {
                 email = "olivermeier92@t-online.de"
         )
         public static String helloWorld(PluginContext context) {
-                return "Hello World";
+                return "Hello Worlds";
         }
 }
