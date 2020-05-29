@@ -33,26 +33,39 @@ public class xlog_to_petrinet {
 		Place placeStart = net.addPlace("start");
 		Place placeEnd = net.addPlace("end");
 		Transition trans = null;
+		Transition currentTrans = null;
 		
 		XTrace traces = log.get(0);
-		
+		String nameEvent = "";
+		String currentName = "";
 		for (int i = 0; i < traces.size(); i++)
 		{
 			
 			XEvent event = traces.get(i);
-			String nameEvent = event.getAttributes().get("Activity").toString();
+			nameEvent = event.getAttributes().get("Activity").toString();
 			if	(nameEvent.equalsIgnoreCase("start")) {
 				trans = net.addTransition(nameEvent);
 				net.addArc(placeStart, trans);
 			} else {
 				Place tmp = net.addPlace("");
 				net.addArc(trans, tmp);
-				trans = net.addTransition(nameEvent);
-				net.addArc(tmp, trans);
+				currentTrans = net.addTransition(nameEvent);
+				System.out.print(nameEvent+" "+currentName+"--");
+				if	(nameEvent.equalsIgnoreCase(currentName)) {
+//					Place back = net.addPlace("back");
+					net.addArc(tmp, trans);
+//					net.addArc(trans, back);
+				}else {
+					net.addArc(tmp, currentTrans);
+				}
+				trans = currentTrans;
+			
 				if	(nameEvent.equalsIgnoreCase("end")) {
 					net.addArc(trans,placeEnd);
 				}
 			}
+			
+			currentName = nameEvent;
 		}
 
         return net;
