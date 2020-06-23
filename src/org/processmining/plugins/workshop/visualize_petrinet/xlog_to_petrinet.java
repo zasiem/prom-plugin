@@ -33,39 +33,39 @@ public class xlog_to_petrinet {
 		Place placeStart = net.addPlace("start");
 		Place placeEnd = net.addPlace("end");
 		Transition trans = null;
-		Transition currentTrans = null;
 		
-		XTrace traces = log.get(0);
+		XTrace trace = log.get(0);
 		String nameEvent = "";
-		String currentName = "";
-		for (int i = 0; i < traces.size(); i++)
+		String nameEventBefore = "";
+		Place tmp = null;
+		Place placeBefore = null;
+		for (int i = 0; i < trace.size(); i++)
 		{
 			
-			XEvent event = traces.get(i);
+			XEvent event = trace.get(i);
 			nameEvent = event.getAttributes().get("Activity").toString();
 			if	(nameEvent.equalsIgnoreCase("start")) {
 				trans = net.addTransition(nameEvent);
 				net.addArc(placeStart, trans);
 			} else {
-				Place tmp = net.addPlace("");
+				tmp = net.addPlace("");
 				net.addArc(trans, tmp);
-				currentTrans = net.addTransition(nameEvent);
-				System.out.print(nameEvent+" "+currentName+"--");
-				if	(nameEvent.equalsIgnoreCase(currentName)) {
-//					Place back = net.addPlace("back");
-					net.addArc(tmp, trans);
-//					net.addArc(trans, back);
+				trans = net.addTransition(nameEvent);
+				if	(nameEvent.equalsIgnoreCase(nameEventBefore)) {
+					Transition hiddenTrans = net.addTransition("");
+					net.addArc(tmp, hiddenTrans);
+					net.addArc(hiddenTrans, placeBefore);
 				}else {
-					net.addArc(tmp, currentTrans);
+					net.addArc(tmp, trans);
 				}
-				trans = currentTrans;
 			
 				if	(nameEvent.equalsIgnoreCase("end")) {
 					net.addArc(trans,placeEnd);
 				}
 			}
 			
-			currentName = nameEvent;
+			nameEventBefore = nameEvent;
+			placeBefore = tmp;
 		}
 
         return net;
