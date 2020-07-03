@@ -112,7 +112,7 @@ public class footprint {
 		System.out.println("bentuk terakhir");
 		for(int i = 0; i < activities.size(); i++) {
 			for(int j = 0; j < activities.size(); j++) {
-			System.out.print(matrixLast[i][j]+ "\t");
+				System.out.print(matrixLast[i][j]+ "\t");
 			}
 			System.out.println();
 		}

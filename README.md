@@ -13,3 +13,6 @@ ProM 6 Process Mining Plugins
 4. setiap matriks diisi pake direct succession jika di array awal ternyata memenuhi syarat
 5. bikin matriks 2 dimensi sesuai ukuran no 3
 6. mengisi matriks nomor 5 dengan causality atau paralel
+
+## Implement other algorithms
+- Implement alpha algorithm in own plugin
