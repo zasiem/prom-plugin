@@ -61,14 +61,6 @@ public class footprint {
 		//mengecek succession
 		for(int i = 0; i < activities.size(); i++) {
 			for(int j = 0; j < activities.size(); j++) {
-				
-//				A > B
-//				Z A B C X
-//			Z	0,0
-//			A	
-//			B
-//			C
-//			X	
 
 				String activity_baris = activities.get(i);
 				String activity_kolom = activities.get(j);
@@ -96,6 +88,31 @@ public class footprint {
 		for(int i = 0; i < activities.size(); i++) {
 			for(int j = 0; j < activities.size(); j++) {
 				System.out.print(matrix[i][j]+ " ");
+			}
+			System.out.println();
+		}
+		
+		String[][] matrixLast = new String[activities.size()][activities.size()];
+		for(int i = 0; i < activities.size(); i++) {
+			for(int j = 0; j < activities.size(); j++) {
+				if (matrix[i][j].equals(">") && matrix[j][i].equals(">")) {
+					matrixLast[i][j] = paralel;
+				}else if(matrix[i][j].equals(">") && matrix[j][i].equals("#")) {
+//					if	(matrixLast[j][i].equals(causality)) {
+//						matrixLast[i][j] = back_causality;
+//					}else {
+						matrixLast[i][j] = causality;
+//					}
+				}else { //hestek doang
+					matrixLast[i][j] = not;
+				}
+			}
+		}
+		
+		System.out.println("bentuk terakhir");
+		for(int i = 0; i < activities.size(); i++) {
+			for(int j = 0; j < activities.size(); j++) {
+			System.out.print(matrixLast[i][j]+ "\t");
 			}
 			System.out.println();
 		}
