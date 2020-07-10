@@ -32,5 +32,6 @@ public class matrix_xlog {
 		}
 		
 		return "Berhasil";
+		
 	}
 }
