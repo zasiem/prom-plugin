@@ -2,7 +2,7 @@ package org.processmining.plugins.workshop.visualize_petrinet;
 
 import java.util.ArrayList;
 
-import org.deckfour.xes.model.XElement;
+import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 
@@ -19,7 +19,7 @@ public class Footprint {
 		ArrayList<ArrayList<String>> cases = new ArrayList<ArrayList<String>>();
 		for(XTrace trace : log) {
 			ArrayList<String> caseTemp = new ArrayList<String>();
-			for(XElement event : trace) {
+			for(XEvent event : trace) {
 				String nameActivity = event.getAttributes().get("Activity").toString();
 				caseTemp.add(nameActivity);
 			}
