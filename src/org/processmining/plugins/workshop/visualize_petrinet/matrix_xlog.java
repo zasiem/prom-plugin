@@ -1,10 +1,6 @@
 package org.processmining.plugins.workshop.visualize_petrinet;
 
-import java.util.ArrayList;
-
-import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XLog;
-import org.deckfour.xes.model.XTrace;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.framework.plugin.annotations.Plugin;
@@ -25,29 +21,16 @@ public class matrix_xlog {
     )
 	public static String convert(PluginContext context, XLog log) {
 		
-		XTrace traces = log.get(0);
-		ArrayList<String> activityList = new ArrayList<String>();
-		String temp = ""; //store list in string
-		for	(int i = 0; i < traces.size(); i++)
-		{
-			XEvent event = traces.get(i);
-			String nameActivity = event.getAttributes().get("Activity").toString();
-			boolean isDiff = true;
-			for (int j = 0; j < activityList.size(); j++)
-			{
-				if(activityList.get(j).equalsIgnoreCase(nameActivity))
-				{
-					isDiff = false;
-				}
+		Footprint footprint = new Footprint();
+		String[][] footprintArray = footprint.buatFootprint(log);
+		System.out.println("Bentuk terakhir dari object footprint");
+		for(int i = 0; i < footprintArray.length; i++) {
+			for(int j = 0; j < footprintArray[i].length; j++) {
+				System.out.print(footprintArray[i][j]+ "\t");
 			}
-			
-			if(isDiff)
-			{
-				activityList.add(nameActivity);
-				temp = temp +" - "+ nameActivity;
-			}
+			System.out.println();
 		}
 		
-		return temp;
+		return "Berhasil";
 	}
 }

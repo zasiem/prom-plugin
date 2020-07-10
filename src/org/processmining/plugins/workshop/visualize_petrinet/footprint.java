@@ -2,9 +2,13 @@ package org.processmining.plugins.workshop.visualize_petrinet;
 
 import java.util.ArrayList;
 
-public class footprint {
+import org.deckfour.xes.model.XElement;
+import org.deckfour.xes.model.XLog;
+import org.deckfour.xes.model.XTrace;
 
-	public static void main(String args[]) {
+public class Footprint {
+
+	public String[][] buatFootprint(XLog log)  {
 		//notations
 		String succession = ">";
 		String causality = "-->";
@@ -12,35 +16,16 @@ public class footprint {
 		String not = "#";
 		String back_causality = "<--";
 		
-		//data
-		ArrayList<String> case1 = new ArrayList<String>();
-		case1.add("Z");
-		case1.add("A");
-		case1.add("A");
-		case1.add("A");
-		case1.add("B");
-		case1.add("C");
-		case1.add("A");
-		case1.add("A");
-		case1.add("A");
-		case1.add("X");
-		ArrayList<String> case2 = new ArrayList<String>();
-		case2.add("Z");
-		case2.add("A");
-		case2.add("A");
-		case2.add("A");
-		case2.add("A");
-		case2.add("B");
-		case2.add("A");
-		case2.add("C");
-		case2.add("A");
-		case2.add("A");
-		case2.add("X");
-		
 		ArrayList<ArrayList<String>> cases = new ArrayList<ArrayList<String>>();
-		cases.add(case1);
-		cases.add(case2);
-		
+		for(XTrace trace : log) {
+			ArrayList<String> caseTemp = new ArrayList<String>();
+			for(XElement event : trace) {
+				String nameActivity = event.getAttributes().get("Activity").toString();
+				caseTemp.add(nameActivity);
+			}
+			cases.add(caseTemp);
+		}
+
 		System.out.println(cases);
 		
 		//pembuatan array list activities untuk label matrix
@@ -98,25 +83,22 @@ public class footprint {
 				if (matrix[i][j].equals(">") && matrix[j][i].equals(">")) {
 					matrixLast[i][j] = paralel;
 				}else if(matrix[i][j].equals(">") && matrix[j][i].equals("#")) {
-//					if	(matrixLast[j][i].equals(causality)) {
-//						matrixLast[i][j] = back_causality;
-//					}else {
+					if(matrixLast[j][i] != null) {
+						if	(matrixLast[j][i].equals(causality)) {
+							matrixLast[i][j] = back_causality;
+						}else {
+							matrixLast[i][j] = causality;
+						}
+					}else {
 						matrixLast[i][j] = causality;
-//					}
+					}
 				}else { //hestek doang
 					matrixLast[i][j] = not;
 				}
 			}
 		}
 		
-		System.out.println("bentuk terakhir");
-		for(int i = 0; i < activities.size(); i++) {
-			for(int j = 0; j < activities.size(); j++) {
-				System.out.print(matrixLast[i][j]+ "\t");
-			}
-			System.out.println();
-		}
-		
+		return matrixLast;
 		
 	}
 	
