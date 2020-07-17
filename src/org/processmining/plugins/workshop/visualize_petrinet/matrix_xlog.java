@@ -21,6 +21,13 @@ public class matrix_xlog {
     )
 	public static String convert(PluginContext context, XLog log) {
 		
+		//notations
+		String succession = ">";
+		String causality = "-->";
+		String paralel = "||";
+		String not = "#";
+		String back_causality = "<--";
+		
 		Footprint footprint = new Footprint();
 		String[][] footprintArray = footprint.buatFootprint(log);
 		System.out.println("Bentuk terakhir dari object footprint");
