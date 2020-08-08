@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class AlphaMinerSteps {
 
+	private ArrayList<String> activitiesBackup;
+	
 	public ArrayList<String> buatPlace(String[][] footprint, ArrayList<String> activities)  {
 		//notations
 		String succession = ">";
@@ -19,6 +21,9 @@ public class AlphaMinerSteps {
 			}
 			System.out.println();
 		}
+		
+		this.activitiesBackup = activities;
+		activities = this.parseActivity(activities);
 		
 		//step 1 -> get activities dari log
 		//step 2 -> tentukan start dan end
@@ -50,7 +55,7 @@ public class AlphaMinerSteps {
 					}
 				}
 			}
-			
+
 			//column
 			ArrayList<Integer> causalitiesColumn = new ArrayList<Integer>();
 			for(int j = 0; j < footprint[i].length; j++) { //looping kolom
@@ -66,7 +71,6 @@ public class AlphaMinerSteps {
 				}
 			}
 		}
-		System.out.println(xL);
 		
 		//step 4 -> seleksi mana yang subset
 		ArrayList<String> hurufHapus = new ArrayList<String>();
@@ -115,8 +119,52 @@ public class AlphaMinerSteps {
 			}
 		}
 		
+		System.out.println(xL);
 		return xL;
 		
+		
+	}
+	
+	private ArrayList<String> parseActivity(ArrayList<String> activities)
+	{
+
+		ArrayList<String> parsed = new ArrayList<String>();
+		for(int i = 0; i < activities.size(); i++)
+		{
+			parsed.add(Integer.toString(i));
+		}
+		return parsed;
+		
+	}
+	
+	//revisi
+	private ArrayList<String> reverseActivity(ArrayList<String> activities, ArrayList<String> xL)
+	{
+//		10,(1,2)
+//		(2,40),2
+		ArrayList<String> temp = new ArrayList<String>();
+		for(int i = 0; i < xL.size(); i++)
+		{
+			int counter = 0; //dimulai ketemu angka
+			String tempXL = xL.get(i);
+			
+			for(int j = 0 ; j < tempXL.length(); j=counter)
+			{
+				int angka = 0;
+				for(int k = j; k <= tempXL.length()-1; k++)
+				{
+					if(tempXL.substring(k,k+1).equals(",") || tempXL.substring(k,k+1).equals("(") || tempXL.substring(k,k+1).equals(")")){
+						try {
+							angka = Integer.valueOf((tempXL.substring(j,k)));
+						}catch(Exception e) {
+							
+						}
+					}
+				}
+				
+			}
+		}
+		return temp;
 		
 	}
 	

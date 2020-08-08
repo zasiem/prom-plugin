@@ -6,12 +6,15 @@ import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.framework.plugin.annotations.Plugin;
+import org.processmining.models.graphbased.directed.petrinet.Petrinet;
+import org.processmining.models.graphbased.directed.petrinet.elements.Place;
+import org.processmining.models.graphbased.directed.petrinet.impl.PetrinetFactory;
 
 public class VisualizePetrinet {
 	@Plugin(
             name = "Visualize Petrinet", 
             parameterLabels = {"XLog"}, 
-            returnLabels = { "Matrix"}, 
+            returnLabels = { "Place"}, 
             returnTypes = { String.class}, 
             userAccessible = true, 
             help = "visualize"
@@ -40,17 +43,35 @@ public class VisualizePetrinet {
 			System.out.println();
 		}
 		
-		AlphaMinerSteps Alpha = new AlphaMinerSteps();
 		Activity act = new Activity();
-		ArrayList<String> placeArray = Alpha.buatPlace(footprintArray, act.getActivities(log));
+		ArrayList<String> activities = new ArrayList<String>();
+		activities = act.getActivities(log);
+		
+		AlphaMinerSteps Alpha = new AlphaMinerSteps();
+		
+		ArrayList<String> placeArray = Alpha.buatPlace(footprintArray, activities);
 		String places = "";
 		for (String  place : placeArray) {
 			places += place+" - ";
 		}
 		
 		System.out.println(places);
+		
+		Petrinet net = PetrinetFactory.newPetrinet("Petrinet");
+		Place start = net.addPlace("start");
+		Place end = net.addPlace("end");
+		
+//		for(String place : placeArray)
+//		{
+//			place = start,implement task
+//			for(String activity : activities)
+//			{
+//				place.
+//			}
+//		}
+//		
 
-		return places;
+		return "berhasil";
 		
 	}
 }
